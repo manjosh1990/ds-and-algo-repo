@@ -3,12 +3,21 @@
  *
  * Unauthorized copying or redistribution of this file in source and binary forms via any medium
  * is strictly prohibited.
+ *
+ * Implementation of a linked list, add, print and reverse methods are implemented
  */
 
 package linkedlists;
 
 public class MyLinkedList {
     Node head;
+
+    public Node getHead() {
+        return head;
+    }
+    public void setHead(Node head){
+        this.head = head;
+    }
 
     public void add(int a) {
         Node newNode = new Node(a);
@@ -26,10 +35,10 @@ public class MyLinkedList {
         Node currentNode = this.head;
         StringBuilder sb = new StringBuilder("[ ");
         while (currentNode != null){
-            sb.append(currentNode.getHead());
+            sb.append(currentNode.getData());
             currentNode = currentNode.getNext();
             if(currentNode!=null){
-                sb.append(" ,");
+                sb.append(", ");
             }
         }
         sb.append(" ]");
@@ -61,24 +70,3 @@ public class MyLinkedList {
     }
 }
 
-class Node {
-    private int head;
-
-    public Node(int data) {
-        this.head = data;
-    }
-
-    private Node next = null;
-
-    public int getHead() {
-        return head;
-    }
-
-    public Node getNext() {
-        return next;
-    }
-
-    public void setNext(Node next) {
-        this.next = next;
-    }
-}
