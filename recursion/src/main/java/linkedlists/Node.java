@@ -9,8 +9,12 @@ package linkedlists;
 
 public class Node {
     private int data;
+    public Node(){
+
+    }
     public Node(int data) {
         this.data = data;
+        this.next = null;
     }
     private Node next = null;
     public int getData() {
