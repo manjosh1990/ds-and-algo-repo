@@ -88,6 +88,58 @@ public class SinglyLinkedList {
         temp.next = null;
         return temp;
     }
+
+    public ListNode deleteLast(){
+        if(head == null || head.next == null){
+            return null;
+        }
+        ListNode prev = null;
+        ListNode current = head;
+        while(current.next != null){
+            prev = current;
+            current = current.next;
+        }
+        prev.next = null;
+        return current;
+    }
+    public ListNode deleteAt(int index){
+        if(head == null) return null;
+        ListNode prev = null;
+        ListNode current = head;
+        int count =0;
+        while (count < index){
+            if(current == null) throw new IllegalArgumentException("Index out of bounds");
+            prev = current;
+            current = current.next;
+            count ++;
+        }
+        if(prev == null){
+            head = current.next;
+            current.next = null;
+            return current;
+        }
+        prev.next = current.next;
+        current.next = null;
+        return current;
+    }
+
+    public ListNode getNthNodeFromEnd(int n){
+        if(head == null) return null;
+        if(n <0) throw new IllegalArgumentException("Invalid value of n :" +n);
+        ListNode ref = head;
+        ListNode main = head;
+        int count =0;
+        while (count < n){
+            if(ref == null) throw new IndexOutOfBoundsException("Invalid value of n :" +n);
+            ref = ref.next;
+            count++;
+        }
+        while (ref != null){
+            main = main.next;
+            ref = ref.next;
+        }
+        return main;
+    }
     public static void main(String[] args) {
         SinglyLinkedList list = new SinglyLinkedList();
         list.head = new ListNode(10);
@@ -110,6 +162,11 @@ public class SinglyLinkedList {
         list.insertAt(16,5);
         list.printNodes();
         list.deleteFirst();
+        list.deleteLast();
         list.printNodes();
+
+        list.deleteAt(4);
+        list.printNodes();
+        System.out.println(list.getNthNodeFromEnd(2).data);
     }
 }
