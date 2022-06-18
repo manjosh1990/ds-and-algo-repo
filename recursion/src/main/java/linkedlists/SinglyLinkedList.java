@@ -59,6 +59,35 @@ public class SinglyLinkedList {
         }
         current.next = newNode;
     }
+    public void insertAt(int value, int index){
+        ListNode node = new ListNode(value);
+        if(index ==0){
+            node.next = head;
+            head = node;
+        }else{
+            ListNode prev = null;
+            ListNode current = head;
+            int count =0;
+            while (count < index){
+                if(current == null){
+                    throw new IllegalArgumentException("Index out of bound");
+                }
+                prev = current;
+                current = current.next;
+                count++;
+            }
+            prev.next = node;
+            node.next = current;
+        }
+    }
+
+    public ListNode deleteFirst(){
+        if(head == null) return null;
+        ListNode temp = head;
+        this.head = head.next;
+        temp.next = null;
+        return temp;
+    }
     public static void main(String[] args) {
         SinglyLinkedList list = new SinglyLinkedList();
         list.head = new ListNode(10);
@@ -77,6 +106,10 @@ public class SinglyLinkedList {
         list.printNodes();
 
         list.add(15);
+        list.printNodes();
+        list.insertAt(16,5);
+        list.printNodes();
+        list.deleteFirst();
         list.printNodes();
     }
 }
