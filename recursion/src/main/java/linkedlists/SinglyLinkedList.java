@@ -156,7 +156,67 @@ public class SinglyLinkedList {
         }
         return slow;
     }
+    public ListNode reverse(){
+        return reverse(head);
+    }
+    private ListNode reverse(ListNode head){
+        if(head == null) return null;
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr!= null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+    public boolean isPalindrome(){
+        if(head == null) return true;
+        ListNode start = head;
+        ListNode middle = getMiddleElement();
+        ListNode reversed = reverse(middle);
+        while (reversed!= null){
+            if(start.data != reversed.data) return false;
+            start = start.next;
+            reversed = reversed.next;
+        }
+        return true;
+    }
+    public ListNode reverseBetween(int m, int n){
+        if(m < 1 && n <1 || n < m || head == null) return null;
+        int count = 0;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode leftPrev = dummy;
+        ListNode current = head;
+        //find start
+        while(count < m-1){
+            leftPrev = current;
+            current = current.next;
+            count++;
+        }
 
+        ListNode prev = null;
+
+        //count = n-count+1;
+        while (count < n){
+            ListNode next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+            count++;
+        }
+        leftPrev.next.next = current;
+        leftPrev.next = prev;
+        ListNode print = dummy.next;
+        while (print!= null){
+            System.out.print(print.data +" ->");
+            print = print.next;
+        }
+        System.out.print("null");
+        return dummy.next;
+    }
     public static void main(String[] args) {
         SinglyLinkedList list = new SinglyLinkedList();
         list.head = new ListNode(10);
@@ -187,5 +247,23 @@ public class SinglyLinkedList {
         System.out.println(list.getNthNodeFromEnd(2).data);
 
         System.out.println(list.getMiddleElement().data);
+        list.reverse();
+
+        SinglyLinkedList newList = new SinglyLinkedList();
+        newList.add(1);
+        newList.add(2);
+        newList.add(3);
+        newList.add(3);
+        newList.add(2);
+        newList.add(15);
+
+        System.out.println(newList.isPalindrome());
+
+        list = new SinglyLinkedList();
+        list.add(96);
+        list.add(90);
+        list.add(12);
+        list.printNodes();
+        list.reverseBetween(1,2);
     }
 }
