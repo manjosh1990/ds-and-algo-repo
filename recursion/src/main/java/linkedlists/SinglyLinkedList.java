@@ -219,8 +219,17 @@ public class SinglyLinkedList {
         System.out.print("null");
         return dummy.next;
     }
-    public ListNode reverseInGroups(int k){
-        ListNode reversed = reverseInGroups(head,k);
+
+    public ListNode reverseInGroups(int k, boolean all) {
+        int length = 0;
+        ListNode current = head;
+        if (all) {
+            while (current != null) {
+                length++;
+                current = current.next;
+            }
+        }
+        ListNode reversed = reverseInGroups(head, k, length, !all);
         System.out.println();
         while (reversed != null) {
             System.out.print(reversed.data + " ->");
@@ -229,18 +238,23 @@ public class SinglyLinkedList {
         System.out.print("null");
         return reversed;
     }
-    public ListNode reverseInGroups(ListNode head, int k) {
-        if(head == null) return null;
-        int count =0;
+
+    public ListNode reverseInGroups(ListNode head, int k, int length, boolean all) {
+        if (head == null) return null;
+        int count = 0;
         ListNode prev = null;
         ListNode current = head;
-        while (current!= null && count++<k){
-            ListNode next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
+        if (length >= k || all) {
+            while (current != null && count++ < k) {
+                ListNode next = current.next;
+                current.next = prev;
+                prev = current;
+                current = next;
+            }
+        } else {
+            return head;
         }
-        head.next = reverseInGroups(current, k);
+        head.next = reverseInGroups(current, k, length - k, all);
         return prev;
     }
 
@@ -303,6 +317,9 @@ public class SinglyLinkedList {
         list.add(6);
         list.add(7);
         list.add(8);
-        list.reverseInGroups(4);
+        list.add(9);
+        list.add(10);
+        list.add(11);
+        list.reverseInGroups(4, true);
     }
 }

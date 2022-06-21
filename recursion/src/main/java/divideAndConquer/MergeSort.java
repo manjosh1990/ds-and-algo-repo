@@ -79,7 +79,7 @@ public class MergeSort {
 */
 class MergeSort {
     public static void main(String[] args) {
-        int[] inputArray = new int[]{5,-8,2,-12,1,0,100};
+        int[] inputArray = new int[]{5, -8, 2, -12, 1, 0, 100};
         System.out.println("before processing");
         printArray(inputArray);
         System.out.println("after sorting");
@@ -113,18 +113,18 @@ class MergeSort {
     public static void merge(int[] inputArray, int[] leftArray, int[] rightArray) {
         int letfSize = leftArray.length;
         int rightSize = rightArray.length;
-        int i=0, j=0,k=0;
-        while (i<letfSize && j<rightSize){
-            if(leftArray[i] <= rightArray[j]){
+        int i = 0, j = 0, k = 0;
+        while (i < letfSize && j < rightSize) {
+            if (leftArray[i] <= rightArray[j]) {
                 inputArray[k++] = leftArray[i++];
-            }else{
+            } else {
                 inputArray[k++] = rightArray[j++];
             }
         }
-        while (i <letfSize){
+        while (i < letfSize) {
             inputArray[k++] = leftArray[i++];
         }
-        while(j < rightSize){
+        while (j < rightSize) {
             inputArray[k++] = rightArray[j++];
         }
     }
@@ -132,7 +132,7 @@ class MergeSort {
     static void printArray(int[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i]);
-            if(i <array.length -1){
+            if (i < array.length - 1) {
                 System.out.print(",");
             }
         }

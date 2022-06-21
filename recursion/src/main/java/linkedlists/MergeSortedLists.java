@@ -26,19 +26,19 @@ public class MergeSortedLists {
 
         mL1.printNodes();
         mL2.printNodes();
-        MyLinkedList newMyLinkedList = sortedMerge(mL1,mL2);
+        MyLinkedList newMyLinkedList = sortedMerge(mL1, mL2);
         newMyLinkedList.printNodes();
     }
 
-    public static Node sordedMerge(Node A, Node B) {
+    public static Node sortedMerge(Node A, Node B) {
         if (A == null) return B;
         if (B == null) return A;
 
-        if(A.getData() < B.getData()){
-            A.setNext(sordedMerge(A.getNext(),B));
+        if (A.getData() < B.getData()) {
+            A.setNext(sortedMerge(A.getNext(), B));
             return A;
-        }else{
-            B.setNext(sordedMerge(A,B.getNext()));
+        } else {
+            B.setNext(sortedMerge(A, B.getNext()));
             return B;
         }
     }
@@ -46,7 +46,7 @@ public class MergeSortedLists {
     public static MyLinkedList sortedMerge(MyLinkedList a, MyLinkedList b) {
         Node A = a.getHead();
         Node B = b.getHead();
-        Node mergedNodes = sordedMerge(A, B);
+        Node mergedNodes = sortedMerge(A, B);
         MyLinkedList newMylinkedList = new MyLinkedList();
         newMylinkedList.setHead(mergedNodes);
         return newMylinkedList;
