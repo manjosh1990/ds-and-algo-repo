@@ -5,8 +5,6 @@
 
 package linkedlists;
 
-import java.util.List;
-
 public class SinglyLinkedList {
     private ListNode head;
 
@@ -146,24 +144,26 @@ public class SinglyLinkedList {
         return main;
     }
 
-    public ListNode getMiddleElement(){
-        if(head == null) return head;
+    public ListNode getMiddleElement() {
+        if (head == null) return head;
         ListNode slow = head;
         ListNode fast = head;
-        while (fast != null && fast.next != null){
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
         return slow;
     }
-    public ListNode reverse(){
+
+    public ListNode reverse() {
         return reverse(head);
     }
-    private ListNode reverse(ListNode head){
-        if(head == null) return null;
+
+    private ListNode reverse(ListNode head) {
+        if (head == null) return null;
         ListNode prev = null;
         ListNode curr = head;
-        while (curr!= null){
+        while (curr != null) {
             ListNode next = curr.next;
             curr.next = prev;
             prev = curr;
@@ -171,27 +171,29 @@ public class SinglyLinkedList {
         }
         return prev;
     }
-    public boolean isPalindrome(){
-        if(head == null) return true;
+
+    public boolean isPalindrome() {
+        if (head == null) return true;
         ListNode start = head;
         ListNode middle = getMiddleElement();
         ListNode reversed = reverse(middle);
-        while (reversed!= null){
-            if(start.data != reversed.data) return false;
+        while (reversed != null) {
+            if (start.data != reversed.data) return false;
             start = start.next;
             reversed = reversed.next;
         }
         return true;
     }
-    public ListNode reverseBetween(int m, int n){
-        if(m < 1 && n <1 || n < m || head == null) return null;
+
+    public ListNode reverseBetween(int m, int n) {
+        if (m < 1 && n < 1 || n < m || head == null) return null;
         int count = 0;
         ListNode dummy = new ListNode(0);
         dummy.next = head;
         ListNode leftPrev = dummy;
         ListNode current = head;
         //find start
-        while(count < m-1){
+        while (count < m - 1) {
             leftPrev = current;
             current = current.next;
             count++;
@@ -200,7 +202,7 @@ public class SinglyLinkedList {
         ListNode prev = null;
 
         //count = n-count+1;
-        while (count < n){
+        while (count < n) {
             ListNode next = current.next;
             current.next = prev;
             prev = current;
@@ -210,13 +212,38 @@ public class SinglyLinkedList {
         leftPrev.next.next = current;
         leftPrev.next = prev;
         ListNode print = dummy.next;
-        while (print!= null){
-            System.out.print(print.data +" ->");
+        while (print != null) {
+            System.out.print(print.data + " ->");
             print = print.next;
         }
         System.out.print("null");
         return dummy.next;
     }
+    public ListNode reverseInGroups(int k){
+        ListNode reversed = reverseInGroups(head,k);
+        System.out.println();
+        while (reversed != null) {
+            System.out.print(reversed.data + " ->");
+            reversed = reversed.next;
+        }
+        System.out.print("null");
+        return reversed;
+    }
+    public ListNode reverseInGroups(ListNode head, int k) {
+        if(head == null) return null;
+        int count =0;
+        ListNode prev = null;
+        ListNode current = head;
+        while (current!= null && count++<k){
+            ListNode next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        head.next = reverseInGroups(current, k);
+        return prev;
+    }
+
     public static void main(String[] args) {
         SinglyLinkedList list = new SinglyLinkedList();
         list.head = new ListNode(10);
@@ -236,13 +263,13 @@ public class SinglyLinkedList {
 
         list.add(15);
         list.printNodes();
-        list.insertAt(16,5);
+        list.insertAt(16, 5);
         list.printNodes();
         list.deleteFirst();
         list.deleteLast();
         list.printNodes();
 
-       // list.deleteAt(4);
+        // list.deleteAt(4);
         list.printNodes();
         System.out.println(list.getNthNodeFromEnd(2).data);
 
@@ -264,6 +291,18 @@ public class SinglyLinkedList {
         list.add(90);
         list.add(12);
         list.printNodes();
-        list.reverseBetween(1,2);
+        list.reverseBetween(1, 2);
+
+        //testing reverse in grps
+        list = new SinglyLinkedList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        list.add(7);
+        list.add(8);
+        list.reverseInGroups(4);
     }
 }
