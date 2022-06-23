@@ -19,14 +19,16 @@ public class SinglyLinkedList {
             this.next = null;
         }
     }
-
+public void printNodes(ListNode head){
+    ListNode current = head;
+    while (current != null) {
+        System.out.print(current.data + " ->");
+        current = current.next;
+    }
+    System.out.println("null");
+}
     public void printNodes() {
-        ListNode current = head;
-        while (current != null) {
-            System.out.print(current.data + " ->");
-            current = current.next;
-        }
-        System.out.println("null");
+        printNodes(head);
     }
 
     //count the length of the linkedList
@@ -257,7 +259,56 @@ public class SinglyLinkedList {
         head.next = reverseInGroups(current, k, length - k, all);
         return prev;
     }
+    public ListNode mergeTwoSortedLists(ListNode A,ListNode B){
+        if(A == null) return B;
+        if(B == null) return A;
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        while (A !=null && B != null){
+            if(A.data < B.data){
+                tail.next = A;
+                A = A.next;
+            }else{
+                tail.next = B;
+                B = B.next;
+            }
+            tail = tail.next;
+        }
+        if(A != null){
+            tail.next = A;
+        }
+        if(B != null){
+            tail.next = B;
+        }
+        System.out.println();
+        printNodes(dummy.next);
+        return dummy.next;
+    }
 
+    public ListNode zipperList(ListNode A, ListNode B){
+        if(A == null) return B;
+        if(B == null) return A;
+
+        ListNode dummyNode = new ListNode(-1);
+        ListNode tail = dummyNode;
+        int count =0;
+        while (A != null && B!= null){
+            if(count % 2 == 0){
+                tail.next = A;
+                A = A.next;
+            }else {
+                tail.next = B;
+                B = B.next;
+            }
+            count++;
+            tail = tail.next;
+        }
+        if(A != null) tail.next = A;
+        if(B != null) tail.next = B;
+        System.out.println();
+        printNodes(dummyNode.next);
+        return dummyNode.next;
+    }
     public static void main(String[] args) {
         SinglyLinkedList list = new SinglyLinkedList();
         list.head = new ListNode(10);
@@ -321,5 +372,20 @@ public class SinglyLinkedList {
         list.add(10);
         list.add(11);
         list.reverseInGroups(4, true);
+
+        //merging two sortedLinked list:
+        SinglyLinkedList aList = new SinglyLinkedList();
+        aList.add(1);
+        aList.add(3);
+        aList.add(5);
+        aList.add(7);
+        aList.add(9);
+
+        SinglyLinkedList bList = new SinglyLinkedList();
+        bList.add(2);
+        bList.add(4);
+        bList.add(6);
+       // aList.mergeTwoSortedLists(aList.head,bList.head);
+        aList.zipperList(aList.head,bList.head);
     }
 }
