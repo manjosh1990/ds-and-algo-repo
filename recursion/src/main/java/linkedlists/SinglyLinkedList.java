@@ -309,6 +309,64 @@ public void printNodes(ListNode head){
         printNodes(dummyNode.next);
         return dummyNode.next;
     }
+
+    //add two numbers represented by a linked list;
+
+    public ListNode addLists(ListNode start1, ListNode start2){
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
+        if(start1 == null) return start2;
+        if(start2 == null) return start1;
+        ListNode a = reverse(start1);
+        ListNode b = reverse(start2);
+        int carry = 0;
+        while (a != null || b !=null){
+            int x = a!= null? a.data:0;
+            int y = b!= null? b.data:0;
+            int sum = carry+x+y;
+            carry = sum/10;
+            ListNode newNode = new ListNode(sum%10);
+            newNode.next = tail.next;
+            tail.next = newNode;
+            if(a!= null) a = a.next;
+            if(b!= null) b = b.next;
+        }
+        if(carry >0){
+            ListNode newNode = new ListNode(carry);
+            newNode.next = tail.next;
+            tail.next = newNode;
+        }
+        return dummy.next;
+
+    }
+
+    //remove duplicates from unsorted list
+    public ListNode removeDuplicates(ListNode head)
+    {
+        // Your code here
+        if(head == null) return head;
+        ListNode dummy = new ListNode(-1);
+        int [] count = new int[1000000];
+        ListNode ptr = head;
+        while(ptr != null){
+            count[ptr.data]++;
+            ptr = ptr.next;
+        }
+        ptr = head;
+        ListNode ptr2 = dummy;
+        while(ptr != null){
+            int i = ptr.data;
+            if(count[i]> 0){
+                count[i] =0;
+                ptr2.next = ptr;
+                ptr2 = ptr2.next;
+            }
+            ptr = ptr.next;
+            ptr2.next = null;
+        }
+        printNodes(dummy.next);
+        return dummy.next;
+    }
     public static void main(String[] args) {
         SinglyLinkedList list = new SinglyLinkedList();
         list.head = new ListNode(10);
@@ -387,5 +445,22 @@ public void printNodes(ListNode head){
         bList.add(6);
        // aList.mergeTwoSortedLists(aList.head,bList.head);
         aList.zipperList(aList.head,bList.head);
+
+        SinglyLinkedList start1 = new SinglyLinkedList();
+        start1.add(3);
+        start1.add(4);
+        start1.add(5);
+        SinglyLinkedList start2 = new SinglyLinkedList();
+        start2.add(4);
+        start2.add(5);
+        start1.printNodes(start1.addLists(start1.head,start2.head));
+
+        SinglyLinkedList singlyLinkedList = new SinglyLinkedList();
+        singlyLinkedList.add(2);
+        singlyLinkedList.add(2);
+        singlyLinkedList.add(2);
+        singlyLinkedList.add(2);
+
+        singlyLinkedList.removeDuplicates(singlyLinkedList.head);
     }
 }
