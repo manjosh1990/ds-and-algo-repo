@@ -367,6 +367,34 @@ public void printNodes(ListNode head){
         printNodes(dummy.next);
         return dummy.next;
     }
+    //pairwise swap:
+
+    public ListNode pairWiseSwap(ListNode head){
+        if(head == null) return null;
+
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
+        ListNode ptr1 = head;
+        ListNode ptr2 = head.next;
+        while (true){
+            ListNode next = ptr2.next;
+            tail.next = ptr2;
+            tail = tail.next;
+            tail.next = ptr1;
+            tail = tail.next;
+            ptr1 = next;
+            if(next == null || next.next ==null){
+                break;
+            }
+            ptr2 = ptr1.next;
+        }
+        if(ptr1 == null)
+            tail.next = null;
+        else
+            tail.next = ptr1;
+        printNodes(dummy.next);
+        return dummy.next;
+    }
     public static void main(String[] args) {
         SinglyLinkedList list = new SinglyLinkedList();
         list.head = new ListNode(10);
@@ -462,5 +490,14 @@ public void printNodes(ListNode head){
         singlyLinkedList.add(2);
 
         singlyLinkedList.removeDuplicates(singlyLinkedList.head);
+        System.out.println();
+
+        //pairSwap
+
+        list = new SinglyLinkedList();
+        list.add(4);
+        list.add(4);
+        list.add(15);
+        list.pairWiseSwap(list.head);
     }
 }
