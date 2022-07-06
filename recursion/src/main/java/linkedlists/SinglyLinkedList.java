@@ -19,14 +19,16 @@ public class SinglyLinkedList {
             this.next = null;
         }
     }
-public void printNodes(ListNode head){
-    ListNode current = head;
-    while (current != null) {
-        System.out.print(current.data + " ->");
-        current = current.next;
+
+    public void printNodes(ListNode head) {
+        ListNode current = head;
+        while (current != null) {
+            System.out.print(current.data + " ->");
+            current = current.next;
+        }
+        System.out.println("null");
     }
-    System.out.println("null");
-}
+
     public void printNodes() {
         printNodes(head);
     }
@@ -259,25 +261,26 @@ public void printNodes(ListNode head){
         head.next = reverseInGroups(current, k, length - k, all);
         return prev;
     }
-    public ListNode mergeTwoSortedLists(ListNode A,ListNode B){
-        if(A == null) return B;
-        if(B == null) return A;
+
+    public ListNode mergeTwoSortedLists(ListNode A, ListNode B) {
+        if (A == null) return B;
+        if (B == null) return A;
         ListNode dummy = new ListNode(0);
         ListNode tail = dummy;
-        while (A !=null && B != null){
-            if(A.data < B.data){
+        while (A != null && B != null) {
+            if (A.data < B.data) {
                 tail.next = A;
                 A = A.next;
-            }else{
+            } else {
                 tail.next = B;
                 B = B.next;
             }
             tail = tail.next;
         }
-        if(A != null){
+        if (A != null) {
             tail.next = A;
         }
-        if(B != null){
+        if (B != null) {
             tail.next = B;
         }
         System.out.println();
@@ -285,26 +288,26 @@ public void printNodes(ListNode head){
         return dummy.next;
     }
 
-    public ListNode zipperList(ListNode A, ListNode B){
-        if(A == null) return B;
-        if(B == null) return A;
+    public ListNode zipperList(ListNode A, ListNode B) {
+        if (A == null) return B;
+        if (B == null) return A;
 
         ListNode dummyNode = new ListNode(-1);
         ListNode tail = dummyNode;
-        int count =0;
-        while (A != null && B!= null){
-            if(count % 2 == 0){
+        int count = 0;
+        while (A != null && B != null) {
+            if (count % 2 == 0) {
                 tail.next = A;
                 A = A.next;
-            }else {
+            } else {
                 tail.next = B;
                 B = B.next;
             }
             count++;
             tail = tail.next;
         }
-        if(A != null) tail.next = A;
-        if(B != null) tail.next = B;
+        if (A != null) tail.next = A;
+        if (B != null) tail.next = B;
         System.out.println();
         printNodes(dummyNode.next);
         return dummyNode.next;
@@ -312,26 +315,26 @@ public void printNodes(ListNode head){
 
     //add two numbers represented by a linked list;
 
-    public ListNode addLists(ListNode start1, ListNode start2){
+    public ListNode addLists(ListNode start1, ListNode start2) {
         ListNode dummy = new ListNode(-1);
         ListNode tail = dummy;
-        if(start1 == null) return start2;
-        if(start2 == null) return start1;
+        if (start1 == null) return start2;
+        if (start2 == null) return start1;
         ListNode a = reverse(start1);
         ListNode b = reverse(start2);
         int carry = 0;
-        while (a != null || b !=null){
-            int x = a!= null? a.data:0;
-            int y = b!= null? b.data:0;
-            int sum = carry+x+y;
-            carry = sum/10;
-            ListNode newNode = new ListNode(sum%10);
+        while (a != null || b != null) {
+            int x = a != null ? a.data : 0;
+            int y = b != null ? b.data : 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            ListNode newNode = new ListNode(sum % 10);
             newNode.next = tail.next;
             tail.next = newNode;
-            if(a!= null) a = a.next;
-            if(b!= null) b = b.next;
+            if (a != null) a = a.next;
+            if (b != null) b = b.next;
         }
-        if(carry >0){
+        if (carry > 0) {
             ListNode newNode = new ListNode(carry);
             newNode.next = tail.next;
             tail.next = newNode;
@@ -341,23 +344,22 @@ public void printNodes(ListNode head){
     }
 
     //remove duplicates from unsorted list
-    public ListNode removeDuplicates(ListNode head)
-    {
+    public ListNode removeDuplicates(ListNode head) {
         // Your code here
-        if(head == null) return head;
+        if (head == null) return head;
         ListNode dummy = new ListNode(-1);
-        int [] count = new int[1000000];
+        int[] count = new int[1000000];
         ListNode ptr = head;
-        while(ptr != null){
+        while (ptr != null) {
             count[ptr.data]++;
             ptr = ptr.next;
         }
         ptr = head;
         ListNode ptr2 = dummy;
-        while(ptr != null){
+        while (ptr != null) {
             int i = ptr.data;
-            if(count[i]> 0){
-                count[i] =0;
+            if (count[i] > 0) {
+                count[i] = 0;
                 ptr2.next = ptr;
                 ptr2 = ptr2.next;
             }
@@ -369,32 +371,155 @@ public void printNodes(ListNode head){
     }
     //pairwise swap:
 
-    public ListNode pairWiseSwap(ListNode head){
-        if(head == null) return null;
+    public ListNode pairWiseSwap(ListNode head) {
+        if (head == null) return null;
 
         ListNode dummy = new ListNode(-1);
         ListNode tail = dummy;
         ListNode ptr1 = head;
         ListNode ptr2 = head.next;
-        while (true){
+        while (true) {
             ListNode next = ptr2.next;
             tail.next = ptr2;
             tail = tail.next;
             tail.next = ptr1;
             tail = tail.next;
             ptr1 = next;
-            if(next == null || next.next ==null){
+            if (next == null || next.next == null) {
                 break;
             }
             ptr2 = ptr1.next;
         }
-        if(ptr1 == null)
+        if (ptr1 == null)
             tail.next = null;
         else
             tail.next = ptr1;
         printNodes(dummy.next);
         return dummy.next;
     }
+
+    public int sumOfLastNElements(ListNode head, int n) {
+        /*int sum = 0;
+        if(head == null || n <0) return sum;
+        ListNode ptr = head;
+        while( n >0 && ptr !=null){
+            sum = sum+ptr.data;
+            ptr = ptr.next;
+            n--;
+        }
+        if(ptr == null && n >0) return 0;
+
+        if(ptr ==null){
+            return sum;
+        }
+        ListNode curr = head;
+        while (ptr != null){
+            ptr = ptr.next;
+            curr = curr.next;
+        }
+        sum = 0;
+        while (curr != null){
+            sum =sum+curr.data;
+            curr = curr.next;
+        }
+        return sum;*/
+        int k = n;
+        if (head == null || k < 0) return 0;
+        ListNode ptr = head;
+        int sum = 0;
+        while (k > 0 && ptr != null) {
+            sum = sum + ptr.data;
+            ptr = ptr.next;
+            k--;
+        }
+        if (ptr == null && k > 0) return 0;
+
+        if (ptr == null) return sum;
+
+        ListNode curr = head;
+        while (ptr != null) {
+            ptr = ptr.next;
+            curr = curr.next;
+        }
+        sum = 0;
+        while (curr != null) {
+            sum = sum + curr.data;
+            curr = curr.next;
+        }
+        return sum;
+
+    }
+
+    //merge sort of a linkedList
+    public ListNode mergeSort(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode curr = head;
+        ListNode first = new ListNode(-1);
+        ListNode second = new ListNode(-1);
+        findMiddle(curr, first, second);
+        ListNode A = mergeSort(first.next);
+        ListNode B = mergeSort(second.next);
+        head = merge(A, B);
+        return head;
+    }
+
+    private ListNode merge(ListNode first, ListNode second) {
+        if (first == null) return second;
+        if (second == null) return first;
+        if (first.data < second.data) {
+            first.next = merge(first.next, second);
+            return first;
+        } else {
+            second.next = merge(first, second.next);
+            return second;
+        }
+    }
+
+    private void findMiddle(ListNode curr, ListNode first, ListNode second) {
+        ListNode slow = curr;
+        ListNode fast = curr.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        first.next = curr;
+        second.next = slow.next;
+        slow.next = null;
+    }
+
+    public ListNode union(ListNode node1, ListNode node2) {
+        int[] a = new int[10000];
+        if (node1 == null) return node2;
+        if (node2 == null) return node1;
+        ListNode curr = node1;
+        ListNode dummy = new ListNode(-1);
+        int end = 0;
+        while (curr != null) {
+            a[curr.data] = a[curr.data] + 1;
+            end = Math.max(end,curr.data);
+            curr = curr.next;
+        }
+        curr = node2;
+
+        while (curr != null) {
+            a[curr.data] = a[curr.data] + 1;
+            end = Math.max(end,curr.data);
+            curr = curr.next;
+        }
+        a[end+1] = -1;
+        ListNode tail = dummy;
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] > 0) {
+                //create node
+                tail.next = new ListNode(i);
+                tail = tail.next;
+            } else if (a[i] < 0) {
+                break;
+            }
+        }
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
         SinglyLinkedList list = new SinglyLinkedList();
         list.head = new ListNode(10);
@@ -471,8 +596,8 @@ public void printNodes(ListNode head){
         bList.add(2);
         bList.add(4);
         bList.add(6);
-       // aList.mergeTwoSortedLists(aList.head,bList.head);
-        aList.zipperList(aList.head,bList.head);
+        // aList.mergeTwoSortedLists(aList.head,bList.head);
+        aList.zipperList(aList.head, bList.head);
 
         SinglyLinkedList start1 = new SinglyLinkedList();
         start1.add(3);
@@ -481,7 +606,7 @@ public void printNodes(ListNode head){
         SinglyLinkedList start2 = new SinglyLinkedList();
         start2.add(4);
         start2.add(5);
-        start1.printNodes(start1.addLists(start1.head,start2.head));
+        start1.printNodes(start1.addLists(start1.head, start2.head));
 
         SinglyLinkedList singlyLinkedList = new SinglyLinkedList();
         singlyLinkedList.add(2);
@@ -499,5 +624,32 @@ public void printNodes(ListNode head){
         list.add(4);
         list.add(15);
         list.pairWiseSwap(list.head);
+        list = new SinglyLinkedList();
+        list.add(3);
+        list.add(5);
+        list.add(2);
+        list.add(1);
+        list.add(4);
+        list.add(1);
+        System.out.println(list.sumOfLastNElements(list.head, 5));
+        list.printNodes(list.mergeSort(list.head));
+        System.out.println();
+        list.printNodes();
+
+        SinglyLinkedList list1 = new SinglyLinkedList();
+        SinglyLinkedList list2 = new SinglyLinkedList();
+        list1.add(9);
+        list1.add(6);
+        list1.add(4);
+        list1.add(2);
+        list1.add(3);
+        list1.add(8);
+
+        list2.add(1);
+        list2.add(2);
+        list2.add(8);
+        list2.add(6);
+        list2.add(2);
+        list1.printNodes(list1.union(list1.head,list2.head));
     }
 }
