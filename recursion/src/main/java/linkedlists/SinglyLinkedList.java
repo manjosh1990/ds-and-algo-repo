@@ -487,6 +487,51 @@ public class SinglyLinkedList {
         slow.next = null;
     }
 
+    public ListNode findMiddle(ListNode head) {
+        if (head == null) return head;
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    public ListNode reOrderList(ListNode head) {
+        if(head == null) return head;
+        ListNode dummy = new ListNode(-1);
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode second = reverse(slow.next);
+        ListNode first = head;
+        slow.next = null;
+        printNodes(first);
+        printNodes(second);
+        int count =1;
+        ListNode tail = dummy;
+        while (first!= null && second != null){
+            if(count % 2 ==0){
+                //even
+                tail.next = new ListNode(second.data);
+                second = second.next;
+            }else{
+                tail.next = new ListNode(first.data);
+                first = first.next;
+            }
+            tail = tail.next;
+            count++;
+        }
+        if(first != null) tail.next = first;
+        if(second!= null)tail.next = second;
+        printNodes(dummy.next);
+        return dummy.next;
+    }
+
     public ListNode union(ListNode node1, ListNode node2) {
         int[] a = new int[10000];
         if (node1 == null) return node2;
@@ -496,17 +541,17 @@ public class SinglyLinkedList {
         int end = 0;
         while (curr != null) {
             a[curr.data] = a[curr.data] + 1;
-            end = Math.max(end,curr.data);
+            end = Math.max(end, curr.data);
             curr = curr.next;
         }
         curr = node2;
 
         while (curr != null) {
             a[curr.data] = a[curr.data] + 1;
-            end = Math.max(end,curr.data);
+            end = Math.max(end, curr.data);
             curr = curr.next;
         }
-        a[end+1] = -1;
+        a[end + 1] = -1;
         ListNode tail = dummy;
         for (int i = 0; i < a.length; i++) {
             if (a[i] > 0) {
@@ -518,6 +563,41 @@ public class SinglyLinkedList {
             }
         }
         return dummy.next;
+    }
+
+    void rearrangeEvenOdd(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        if (head == null) return;
+        ListNode oddDummy = new ListNode(-1);
+        ListNode tailOdd = oddDummy;
+        ListNode evenDummy = new ListNode(-2);
+        ListNode tailEven = evenDummy;
+        ListNode curr = head;
+
+        while (curr != null) {
+            if (curr.data % 2 == 0) {
+                //even
+                tailEven.next = new ListNode(curr.data);
+                tailEven = tailEven.next;
+            } else {
+                tailOdd.next = new ListNode(curr.data);
+                tailOdd = tailOdd.next;
+            }
+            curr = curr.next;
+        }
+        //connect both nodes
+        tailOdd.next = evenDummy.next;
+        dummy.next = oddDummy.next;
+        ListNode result = dummy.next;
+        curr = head;
+        while (curr != null) {
+            curr.data = result.data;
+            curr = curr.next;
+            result = result.next;
+        }
+
+        printNodes(head);
     }
 
     public static void main(String[] args) {
@@ -650,6 +730,31 @@ public class SinglyLinkedList {
         list2.add(8);
         list2.add(6);
         list2.add(2);
-        list1.printNodes(list1.union(list1.head,list2.head));
+        list1.printNodes(list1.union(list1.head, list2.head));
+        System.out.println("rearrange");
+        list = new SinglyLinkedList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.rearrangeEvenOdd(list.head);
+
+
+        list = new SinglyLinkedList();
+        list.add(75);
+        list.add(122);
+        list.add(59);
+        list.add(196);
+        list.add(30);
+        list.add(38);
+        list.add(36);
+        list.add(194);
+       // list.add(5);
+        //int result = list.findMiddle(list.head).data;
+       // System.out.println(result);
+
+        System.out.println("reorder");
+        list.reOrderList(list.head);
     }
 }
