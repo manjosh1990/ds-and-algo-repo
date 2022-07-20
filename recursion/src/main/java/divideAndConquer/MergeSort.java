@@ -77,6 +77,7 @@ public class MergeSort {
     }
 }
 */
+package divideAndConquer;
 class MergeSort {
     public static void main(String[] args) {
         int[] inputArray = new int[]{5, -8, 2, -12, 1, 0, 100};
