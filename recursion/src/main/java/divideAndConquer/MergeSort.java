@@ -88,8 +88,8 @@ class MergeSort {
         printArray(inputArray);
     }
 
-    public static void mergeSort(int intputArr[]) {
-        int inputLength = intputArr.length;
+    public static void mergeSort(int[] inputArr) {
+        int inputLength = inputArr.length;
 
         if (inputLength < 2) {
             return;
@@ -99,16 +99,16 @@ class MergeSort {
         int[] letfArray = new int[midIndex];
         int[] rightArray = new int[inputLength - midIndex];
 
-        for (int i = 0; i < midIndex; i++) {
-            letfArray[i] = intputArr[i];
+        for(int i = 0; i < midIndex; i++) {
+            letfArray[i] = inputArr[i];
         }
-        for (int i = midIndex; i < inputLength; i++) {
-            rightArray[i - midIndex] = intputArr[i];
+        for(int i = midIndex; i < inputLength; i++) {
+            rightArray[i - midIndex] = inputArr[i];
         }
         mergeSort(letfArray);
         mergeSort(rightArray);
 
-        merge(intputArr, letfArray, rightArray);
+        merge(inputArr, letfArray, rightArray);
     }
 
     public static void merge(int[] inputArray, int[] leftArray, int[] rightArray) {
