@@ -8,7 +8,7 @@ package divideAndConquer;
 public class BinarySearch {
     public static void main(String[] args) {
         int [] input = {-2,-1,0,1,2,3,4,9,10,20};
-        System.out.println(binarySearch(input,0,input.length-1,10));
+        System.out.println(binarySearch(input,0,input.length-1,100));
     }
 
     public static int binarySearch(int []A, int leftIndex,int rightIndex, int valueToSearch){
